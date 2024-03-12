@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input rules:</title>
+<style>
+    .input-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .input-container input {
+        flex: 1;
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }
+    .input-container button {
+        flex: 0;
+    }
+    .input-set {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Input rules:</h1>
+<p>Enter rules such that:<br>
+    index : points to index of container, or set to -1 for complete document or leave empty. <br>
+    tagName : Enter the tagname for which we are checking some condition e.g. "h1".<br>
+    attribute : e.g id , class etc.
+    value : this is value of attribute e.g color-class.<br>
+    description : Enter the description of above rule. When this rule is not satisfied, user will be shown this descrprition.
+
+    <br> 
+    <br>
+    If any field is left empty , then universe of discourse is taken.<br>
+    <br>
+    e.g inputs:
+<br>    [ -1, "section", "id", "welcome-section","there should be an element "section" with id=welcom-section"],
+<br>   [0, "nav", "class", "","0th element i.e section should contain a nav with any class"],
+<br>     [0, "", "id", "profile-link","0th elemnt i.e section should contian some elment with id=profile-link"]
+<br>
+</p>
+<button id="addButton">Add</button>
+<button id="deleteButton">Delete</button>
+
+<form id="inputForm">
+    <div id="inputContainer" class="input-container">
+        <!-- Existing inputs will be here -->
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    let place=["index","tagName","attribute","value","description"];
+    document.getElementById('addButton').addEventListener('click', function() {
+        const inputContainer = document.getElementById('inputContainer');
+        const inputSet = document.createElement('div');
+        inputSet.className = 'input-set';
+        for (let i = 1; i <= 5; i++) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'input' + i;
+            input.placeholder = place[i-1];
+            inputSet.appendChild(input);
+        }
+        inputContainer.appendChild(inputSet);
+    });
+
+    document.getElementById('deleteButton').addEventListener('click', function() {
+        const inputContainer = document.getElementById('inputContainer');
+        const inputSets = inputContainer.querySelectorAll('.input-set');
+        const numInputSets = inputSets.length;
+        if (numInputSets > 0) {
+            // Remove the last set of input fields
+            inputContainer.removeChild(inputSets[numInputSets - 1]);
+        }
+    });
+
+    document.getElementById('inputForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        const formData = new FormData(this);
+        const formDataObject = {};
+        let inputData = [];
+        let tempArray = [];
+        formData.forEach((value, key) => {
+            tempArray.push(value);
+            if (tempArray.length === 5) {
+                inputData.push(tempArray);
+                tempArray = [];
+            }
+        });
+
+        // Replace 'your-api-endpoint' with the actual API endpoint URL
+        fetch('http://localhost:3000/rules', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API response:', data);
+            // Optionally, do something with the API response
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+</script>
+
+</body>
+</html>

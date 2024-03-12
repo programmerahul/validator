@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Submission</title>
+    <style>
+        body, html {
+            margin: 10;
+            padding: 0;
+            height: 90%;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 65vh; /* Take up full viewport height */
+        }
+        .input-container {
+            display: flex;
+            flex: 1;
+        }
+        .input-box {
+            flex: 1;
+            margin: 10px;
+        }
+        #submitButton {
+            margin: 10px;
+        }
+        #responseData{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Validate HTML and CSS: </h1>
+        <form id="dataForm">
+            <div class="container">
+            <div class="input-container">
+                <textarea class="input-box" id="input1" name="input1" placeholder="HTML"></textarea>
+            </div>
+            <div class="input-container">
+                <textarea class="input-box" id="input2" name="input2" placeholder="CSS"></textarea>
+            </div>
+        </div>
+            <input type="submit" value="Submit" id="submitButton">
+        </form>
+        <p id="responseData"></p>
+    <script>
+        document.getElementById("dataForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get input values
+            var input1Value = document.getElementById("input1").value;
+            var input2Value = document.getElementById("input2").value;
+
+            // Construct data object to send
+            var data = {
+                html: input1Value,
+                css: input2Value
+            };
+
+            // Convert data to JSON format
+            var jsonData = JSON.stringify(data);
+
+            // Call your API here
+            fetch("http://localhost:3000/validate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("API Response:", data);
+                document.getElementById("responseData").textContent = data["status"];
+                // Handle API response here
+            })
+            .catch(error => {
+                console.error("There was a problem with your fetch operation:", error);
+            });
+        });
+    </script>
+</body>
+</html>
