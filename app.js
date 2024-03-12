@@ -31,13 +31,14 @@ function matchRules(document, rules) {
     for (let i = 0; i < rules.length; i++) {
         let [index, tagName, attribute, value] = rules[i];
         let doc=document;
-        if(index)doc=ruleObj[index];
+        if(index!=-1)doc=ruleObj[index];
         let elements=[];
         if(tagName)
          elements = doc.querySelectorAll(tagName);
         else{
-            if(attribute=="class")
+            if(attribute=="class"){
                 elements=doc.querySelectorAll("."+value);
+            }
             else if(attribute=="id")
                 elements=doc.querySelectorAll("#"+value);
         }
