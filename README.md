@@ -1,19 +1,19 @@
 Let say we want to validate these two rules against an html file:    
 
 rule 1: there should be a paragraph element with id = welcome    
-tule 2: there should be an h1 element with any class    
-
+rule 2: there should be an h1 element with any class    
+  
 Solution :     
 1. npm i //it installs all required dependencies    
 2. node app.js //it starts the backend server    
 3. Open inputRule.html file using live server tool: //this provide web based interface to enter validation rules    
   <img width="960" alt="image" src="https://github.com/programmerahul/validator/assets/84563516/3b679030-8a18-4cb8-8b5b-64893d4bbffc">  
-  click on ADD button to add a new rule:  
-  add rules :  
-   rule 1) -1 , p, id , welcome, there should be a paragraph element with id = welcome  
-   rule 2) -1  , h1, class , , there should be an h1 element inside the paragraph element with class=profile  
-  click on submit. // it sends all rules to backend    
-
+  click on ADD button to add a new rule:    
+  add rules :    
+   rule 1) -1 , p, id , welcome, there should be a paragraph element with id = welcome    
+   rule 2) -1  , h1, class , , there should be an h1 element inside the paragraph element with class=profile    
+  click on submit. // it sends all rules to backend      
+  
 4. Open inputHtmlCss.html file using live server tool: //this provide web based interface to enter html , css files see validation results  
     <img width="960" alt="image" src="https://github.com/programmerahul/validator/assets/84563516/b1a4d141-4d2a-4905-9381-4897b065f576">  
     Enter html and css:     
