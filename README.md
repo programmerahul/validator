@@ -1,7 +1,14 @@
-Let say we want to validate these two rules against an html file:    
-
-rule 1: there should be a paragraph element with id = welcome    
-rule 2: there should be an h1 element with any class    
+How it works:    
+1. User enter validation rules using form interface (inputform.html).      
+2. Rule are stored as 2d array in backend.      
+3. User enters html, css code using web interface (inputHtmlCSS.html).    
+4. Backend uses jsdom to parse html and verify rules.    
+5. Rules that are not satisfied are shown to user.  
+  
+Let say we want to validate these two rules against an html file:  
+  
+rule 1: there should be a paragraph element with id = welcome       
+rule 2: there should be an h1 element with any class      
   
 Solution :     
 1. npm i //it installs all required dependencies    
@@ -30,6 +37,8 @@ It shows that second rule is not satified. This is because we have created a par
 
 <img width="960" alt="image" src="https://github.com/programmerahul/validator/assets/84563516/eb3b192b-a786-4327-9d8e-4cb39976ef2c">  
 it shows all clear, meaning above 2 rules are satisfied.  
+
+
 
 
  
